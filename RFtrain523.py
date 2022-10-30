@@ -9,6 +9,7 @@ import numpy as np
 from sklearn.model_selection import cross_val_score
 import matplotlib.pyplot as plt
 from sklearn import tree
+import DataProcess as DP
 
 # datafile = 'data_pd3.csv' #5.2.3无时频域特征的训练过程用这个代码，如果做有时频域的注释掉本行，用下一行代码
 datafile = 'dataTF_pd3.csv' 
@@ -91,6 +92,8 @@ def RF_Visual(X_train, RF, datafile):
     fig.savefig(treefileName) #5.2.3对应GraphicTree3
 
 if __name__ == '__main__':
+    if not(os.path.exists(datafile)):
+        DP.data_save_CSV('CWRBearingData')  #判断是否已经有处理好的CSV文件，如果没有，调用程序生成该文件
     RF, X_train, y_train = RF_training(datafile)
     RF_Visual(X_train, RF, datafile)
     Accuracy_curve(X_train, y_train, datafile, 50)
